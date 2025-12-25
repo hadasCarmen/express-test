@@ -2,7 +2,8 @@
   {
     "id": 1,
     "username": "elazar",
-    "password": "12345"
+    "password": "12345",
+    "type": "user"
   },
   {
     "username": "adas",

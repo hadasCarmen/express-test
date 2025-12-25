@@ -3,5 +3,10 @@
     "eventName": "string",
     "ticketsAvailable": 5,
     "createdBy": "elazar"
+  },
+  {
+    "eventName": "standupp",
+    "ticketsAvailable": 50,
+    "createdBy": "elazar"
   }
 ]

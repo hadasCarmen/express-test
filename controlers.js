@@ -79,18 +79,22 @@ export const createEvent = async (req, res) => {
       .status(401)
       .json({ message: "Unauthorized: Invalid username or password" });
   }
-
-  const events = await readEvent();
-
-  const newEvent = {
-    eventName,
-    ticketsAvailable,
-    createdBy: user.username,
-  };
-
-  events.push(newEvent);
-  await writeEvents(events);
-  res.status(201).json({ message: "Event created successfully" });
+  if (user.type==="user") {
+    
+      const events = await readEvent();
+    
+      const newEvent = {
+        eventName,
+        ticketsAvailable,
+        createdBy: user.username,
+      };
+    
+      events.push(newEvent);
+      await writeEvents(events);
+      res.status(201).json({ message: "Event created successfully" });
+  } else {
+    res.status(401).send('just user can create event')
+  }
 };
 
 export const buyTickets = async (req, res) => {
@@ -156,3 +160,7 @@ export const ticketOneUser = async (req, res) => {
     res.status(500).send("not receipts exist");
   }
 };
+
+export const transferTickets=async(req,res)=>{
+
+}
