@@ -22,7 +22,7 @@ async function writeUsers(users) {
 }
 
 export const reginUser = async (req, res) => {
-  const { username, password,type } = req.body;
+  const { username, password, type } = req.body;
   const users = await readUsers();
 
   if (users.some((u) => u.username === username)) {
@@ -34,9 +34,9 @@ export const reginUser = async (req, res) => {
     password,
   };
   if (type) {
-    newUser["type"]=type
-  }else{
-    newUser["type"]="user"
+    newUser["type"] = type;
+  } else {
+    newUser["type"] = "user";
   }
 
   users.push(newUser);
@@ -79,21 +79,20 @@ export const createEvent = async (req, res) => {
       .status(401)
       .json({ message: "Unauthorized: Invalid username or password" });
   }
-  if (user.type==="user") {
-    
-      const events = await readEvent();
-    
-      const newEvent = {
-        eventName,
-        ticketsAvailable,
-        createdBy: user.username,
-      };
-    
-      events.push(newEvent);
-      await writeEvents(events);
-      res.status(201).json({ message: "Event created successfully" });
+  if (user.type === "user") {
+    const events = await readEvent();
+
+    const newEvent = {
+      eventName,
+      ticketsAvailable,
+      createdBy: user.username,
+    };
+
+    events.push(newEvent);
+    await writeEvents(events);
+    res.status(201).json({ message: "Event created successfully" });
   } else {
-    res.status(401).send('just user can create event')
+    res.status(401).send("just user can create event");
   }
 };
 
@@ -161,6 +160,30 @@ export const ticketOneUser = async (req, res) => {
   }
 };
 
-export const transferTickets=async(req,res)=>{
+export const transferTickets = async (req, res) => {
+  const { username, username2, password, eventName, quantityTransfer } =
+    req.body;
+  const user = await validateUser(username, password);
+  if (!user) {
+    return res
+      .status(401)
+      .json({ message: "Unauthorized: Invalid username or password" });
+  }
+  const users = readUsers();
 
-}
+  const events =await readEvent();
+  const event = events.findIndex((e) => e.eventName === eventName);
+  const newEvent2 = {
+    eventName,
+    ticketsAvailable: quantityTransfer,
+    createdBy: username2,
+  };
+  const newEvent1 = {
+    eventName,
+    ticketsAvailable: (events[event].ticketsAvailable -= quantityTransfer),
+    createdBy: username,
+  };
+  events[event] = newEvent1;
+  events.push(newEvent2);
+  writeEvents(events);
+};
