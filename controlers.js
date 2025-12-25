@@ -65,26 +65,6 @@ async function writeReceipts(receipts) {
   await fs.writeFile("receipts.json", JSON.stringify(receipts, null, 2));
 }
 
-// app.post("/login", async (req, res) => {
-//   const { username, password } = req.body;
-//   const user = await validateUser(username, password);
-
-//   if (!user) {
-//     return res.status(401).json({ message: "Invalid username or password" });
-//   }
-
-//   const { password: _, ...userResponse } = user;
-//   res.json({
-//     message: "Login successful",
-//     user: userResponse,
-//   });
-// });
-
-// app.get("/events", async (req, res) => {
-//   const events = await readEvent();
-//   res.json(events);
-// });
-
 export const createEvent = async (req, res) => {
   const { username, password, eventName, ticketsAvailable } = req.body;
 
@@ -96,7 +76,6 @@ export const createEvent = async (req, res) => {
   }
 
   const events = await readEvent();
-  const maxId = events.length > 0 ? Math.max(...events.map((p) => p.id)) : 0;
 
   const newEvent = {
     eventName,
