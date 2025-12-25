@@ -155,8 +155,11 @@ export const ticketOneUser = async (req, res) => {
       0
     );
     const events = [];
-    userReceipts.forEach((r) => {
-      events.push(r.eventName);
+    userReceipts.forEach((e) => {
+      const exist = events.some((re) => re.eventName === e.eventName);
+      if (!exist) {
+        events.push(e.eventName);
+      }
     });
     const averageTicketsPerEvent = totalTicketsBought / userReceipts.length;
     const summary = {
