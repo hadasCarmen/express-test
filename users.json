@@ -3,5 +3,15 @@
     "id": 1,
     "username": "elazar",
     "password": "12345"
+  },
+  {
+    "username": "adas",
+    "password": "6789",
+    "type": "user"
+  },
+  {
+    "username": "moshe",
+    "password": "123",
+    "type": "admin"
   }
 ]

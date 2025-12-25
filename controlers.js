@@ -22,7 +22,7 @@ async function writeUsers(users) {
 }
 
 export const reginUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password,type } = req.body;
   const users = await readUsers();
 
   if (users.some((u) => u.username === username)) {
@@ -33,6 +33,11 @@ export const reginUser = async (req, res) => {
     username,
     password,
   };
+  if (type) {
+    newUser["type"]=type
+  }else{
+    newUser["type"]="user"
+  }
 
   users.push(newUser);
   await writeUsers(users);
