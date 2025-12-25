@@ -144,3 +144,28 @@ export const buyTickets = async (req, res) => {
     res.status(404).send({ message: "not enouf tickets" });
   }
 };
+
+export const ticketOneUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const receipts = await readReceipts();
+    const userReceipts = receipts.filter((r) => r.username === username);
+    const totalTicketsBought = userReceipts.reduce(
+      (sumi, r) => sumi + r.ticketsBought,
+      0
+    );
+    const events = [];
+    userReceipts.forEach((r) => {
+      events.push(r.eventName);
+    });
+    const averageTicketsPerEvent = totalTicketsBought / userReceipts.length;
+    const summary = {
+      totalTicketsBought: totalTicketsBought,
+      events: events,
+      averageTicketsPerEvent: averageTicketsPerEvent,
+    };
+    res.status(200).json({ summary });
+  } catch (error) {
+    res.status(500).send("not receipts exist");
+  }
+};
