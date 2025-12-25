@@ -1,9 +1,7 @@
 [
   {
-    "id": 1,
     "eventName": "string",
-    "ticketsForSale": 10,
-    "authorId": 1,
-    "authorUsername": "elazar"
+    "ticketsAvailable": 5,
+    "createdBy": "elazar"
   }
 ]
